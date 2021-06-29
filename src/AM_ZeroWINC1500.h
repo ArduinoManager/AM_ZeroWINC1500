@@ -35,7 +35,7 @@
 #endif
 
 
-#include <Adafruit_WINC1500.h>
+#include <WiFi101.h>
 
 #if defined(SD_SUPPORT) || defined(SDLOGGEDATAGRAPH_SUPPORT) 
 	#include <SD.h>
@@ -43,7 +43,7 @@
 
 #if defined(ALARMS_SUPPORT)
 
-#include <Adafruit_WINC1500Udp.h>
+#include <WiFiUdp.h>
 
 #include "utility/Alarm.h"
 #include "utility/FileManager.h"
@@ -66,13 +66,13 @@ char											_variable[VARIABLELEN+1];
 char 	   									_value[VALUELEN+1];
 bool	   									_var;
 int       								_idx;
-Adafruit_WINC1500Server 	*_server;
-Adafruit_WINC1500Client  	*_pClient;
+WiFiServer 								*_server;
+WiFiClient  							*_pClient;
 bool											_initialized;
 
 #ifdef ALARMS_SUPPORT
 String 										_alarmFile;
-Adafruit_WINC1500UDP			_udp;
+WiFiUDP										_udp;
 IPAddress 								_timeServerAddress;  // NTP Server Address
 bool											_sendNtpRequest;
 byte 											_packetBuffer[48]; 	// buffer to hold incoming and outgoing packets 
@@ -130,7 +130,7 @@ void readVariable(void);
 
 #ifdef ALARMS_SUPPORT
 
-void sendNTPpacket(IPAddress& address, Adafruit_WINC1500UDP udp);
+void sendNTPpacket(IPAddress& address, WiFiUDP udp);
 void breakTime(unsigned long time, int *seconds, int *minutes, int *hours, int *Wday, long *Year, int *Month, int *Day);
 
 void syncTime();
@@ -147,7 +147,7 @@ public:
 
 #if defined(ALARMS_SUPPORT)
 
-	AMController(Adafruit_WINC1500Server *server, 
+	AMController(WiFiServer *server, 
 								  void (*doWork)(void), 
 								  void (*doSync)(void), 
 								  void (*processIncomingMessages)(char *variable, char *value),
@@ -160,7 +160,7 @@ public:
 #endif
 
 
-	AMController(Adafruit_WINC1500Server *server, 
+	AMController(WiFiServer *server, 
 								  void (*doWork)(void), 
 								  void (*doSync)(void), 
 								  void (*processIncomingMessages)(char *variable, char *value),

@@ -40,7 +40,7 @@
 
 /*
 
-   WINC1500 Library configuration
+   WiFi101 Library configuration
 
 */
 char ssid[]    = "myssid";      //  your network SSID (name)
@@ -51,7 +51,7 @@ IPAddress dns(x, y, t, z);
 IPAddress gateway(x, y, t, z);
 IPAddress subnet(x, y, t, z);
 
-Adafruit_WINC1500Server server(port);
+WiFiServer server(80); server(port);
 
 int status = WL_IDLE_STATUS;
 
@@ -74,10 +74,6 @@ void processOutgoingMessages();
 void processAlarms(char *variable);
 void deviceConnected();
 void deviceDisconnected();
-bool checkTwitter(char *variable, char *value);
-
-
-Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
 
 /*
 
@@ -92,6 +88,8 @@ Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
 
 void setup() {
 
+	WiFi.setPins(WINC_CS, WINC_IRQ, WINC_RST);
+	
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only

@@ -44,7 +44,7 @@
 
 /*
 
-   WINC1500 Library configuration
+   WiFi101 Library configuration
 
 */
 IPAddress ip(192, 168, 1, 233);
@@ -57,7 +57,7 @@ char pass[] = SECRET_PASS;  // your network password i.g. "MYPASSWORD"
 
 int status = WL_IDLE_STATUS;
 
-Adafruit_WINC1500Server server(80);
+WiFiServer server(80);
 
 /**
 
@@ -96,10 +96,6 @@ void processOutgoingMessages();
 void processAlarms(char *variable);
 void deviceConnected();
 void deviceDisconnected();
-bool checkTwitter(char *variable, char *value);
-
-
-Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
 
 /*
 
@@ -113,7 +109,9 @@ AMController amController(&server, &doWork, &doSync, &processIncomingMessages, &
 #endif
 
 void setup() {
-
+  
+  WiFi.setPins(WINC_CS, WINC_IRQ, WINC_RST);
+  
   Serial.begin(9600);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only

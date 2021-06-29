@@ -48,7 +48,7 @@ bool check(uint8_t *pRecord, void *pData) {
 
 #if defined(ALARMS_SUPPORT)
 
-AMController::AMController(Adafruit_WINC1500Server *server, 
+AMController::AMController(WiFiServer *server, 
 								  void (*doWork)(void), 
 								  void (*doSync)(void), 
 								  void (*processIncomingMessages)(char *variable, char *value),
@@ -75,7 +75,7 @@ AMController::AMController(Adafruit_WINC1500Server *server,
 
 
 
-AMController::AMController(Adafruit_WINC1500Server *server, 
+AMController::AMController(WiFiServer *server, 
                              void (*doWork)(void), 
                              void (*doSync)(void),
                              void (*processIncomingMessages)(char *variable, char *value),
@@ -143,7 +143,7 @@ void AMController::loop(unsigned long _delay) {
   	
  	_doWork();
  	
-  	Adafruit_WINC1500Client localClient = _server->available();
+  	WiFiClient localClient = _server->available();
   	_pClient = &localClient;
     
   	if (localClient) {
@@ -558,7 +558,7 @@ void AMController::readTime() {
 }
 
 // send an NTP request to the time server at the given address 
-void AMController::sendNTPpacket(IPAddress& address, Adafruit_WINC1500UDP udp) {
+void AMController::sendNTPpacket(IPAddress& address, WiFiUDP udp) {
   // set all bytes in the buffer to 0
   memset(_packetBuffer, 0, 48); 
   // Initialize values needed to form NTP request
