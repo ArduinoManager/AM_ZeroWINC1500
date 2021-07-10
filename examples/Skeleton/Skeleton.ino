@@ -105,6 +105,21 @@ void setup() {
   }
   Serial.println("DETECTED");
   
+#if defined(SD_SUPPORT)
+  Serial.println("Initializing SD card...");
+
+  delay(2000);
+  digitalWrite(WINC_CS, HIGH);
+
+  // see if the card is present and can be initialized:
+  if (!SD.begin(SD_SELECT)) {
+    Serial.println("Card failed, or not present");
+  }
+  else {
+  	Serial.println("card initialized.");
+  }
+#endif
+  
   // attempt to connect to Wifi network
   WiFi.config(ip, dns, gateway, subnet);
 
