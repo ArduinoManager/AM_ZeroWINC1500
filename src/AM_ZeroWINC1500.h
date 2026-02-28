@@ -56,27 +56,27 @@
 
 
 #define VARIABLELEN 					14
-#define VALUELEN 							14
+#define VALUELEN 						14
 
 
 class AMController {
 
 private:
-char											_variable[VARIABLELEN+1];
-char 	   									_value[VALUELEN+1];
-bool	   									_var;
+char									_variable[VARIABLELEN+1];
+char 	   								_value[VALUELEN+1];
+bool	   								_var;
 int       								_idx;
 WiFiServer 								*_server;
 WiFiClient  							*_pClient;
 bool											_initialized;
 
 #ifdef ALARMS_SUPPORT
-String 										_alarmFile;
-WiFiUDP										_udp;
+String 									_alarmFile;
+WiFiUDP									_udp;
 IPAddress 								_timeServerAddress;  // NTP Server Address
-bool											_sendNtpRequest;
-byte 											_packetBuffer[48]; 	// buffer to hold incoming and outgoing packets 
-unsigned long   					_lastAlarmCheck;
+bool									_sendNtpRequest;
+byte 									_packetBuffer[48]; 	// buffer to hold incoming and outgoing packets 
+unsigned long   						_lastAlarmCheck;
 unsigned long							_startTime;
 #endif
 
@@ -184,6 +184,7 @@ public:
 	void logLn(unsigned long msg);
 
 	void temporaryDigitalWrite(uint8_t pin, uint8_t value, unsigned long ms);
+	float to_voltage(float adc_value, float vref, uint8_t resolution = 10);
 	
 	void setNTPServerAddress(IPAddress address);	
 	
